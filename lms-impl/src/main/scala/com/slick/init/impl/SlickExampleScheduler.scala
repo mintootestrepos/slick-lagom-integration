@@ -31,7 +31,7 @@ class SlickExampleScheduler @Inject()(lmsService: LMSService, system: ActorSyste
 
     println("=============>1")
 
-    val borrower = schedulerImplDao.fetchBorrowerProfile("SomeID")
+    val borrower = schedulerImplDao.fetchBorrowerProfile("SomeOtherID1")
     println(s"================> $borrower")
   }
 
