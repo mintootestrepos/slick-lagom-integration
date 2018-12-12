@@ -4,9 +4,8 @@ import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import akka.util.Timeout
 import com.google.gson.Gson
-import com.loanframe.lfdb.models.ConfigTable
+import com.loanframe.lfdb.models.LoginTable
 import com.slick.init.api.LMSService
-import com.slick.init.lfdb.LoginTable
 import com.slick.init.models.LMSModels.BorrowerProfile
 import javax.inject.Inject
 import play.api.Configuration
