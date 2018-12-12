@@ -1,7 +1,6 @@
 package com.slick.init.impl
 
-import com.loanframe.lfdb.models._
-
+import com.slick.init.lfdb.LoginTable
 
 class SchedulerImplDao(loginTable: LoginTable) {
 

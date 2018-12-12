@@ -6,10 +6,10 @@ import com.loanframe.lfdb.contract.LoginAuthType.LoginAuthType
 import com.loanframe.lfdb.contract.RoleType.RoleType
 import com.loanframe.lfdb.contract.{LoginAuthType, RoleType, UserProfile}
 import com.loanframe.lfdb.util.Functions._
-import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfig}
+import javax.inject.Inject
 import play.api.libs.Codecs
-import slick.backend.DatabaseConfig
-import slick.driver.JdbcProfile
+import slick.jdbc.JdbcBackend.Database
+import slick.jdbc.JdbcProfile
 import slick.lifted.ProvenShape
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -22,15 +22,17 @@ case class Login(id: String, email: String, password: String, authCode: String, 
                  token: Option[String], passwordResetKey: Option[String] = None, status: Boolean = false, otpCode: String = "",
                  role: RoleType = RoleType.Borrower, appPushId: Option[String], webPushId: Option[String], agentId: Option[String])
 
-trait LoginTable extends HasDatabaseConfig[JdbcProfile] {
+class LoginTable @Inject()(val driver: JdbcProfile, val db: Database) {
 
   import driver.api._
+
   val logins: TableQuery[LoginMapping] = TableQuery[LoginMapping]
 
   implicit val loginAuthTypeMapper = MappedColumnType.base[LoginAuthType, String](
     e => e.toString,
     s => LoginAuthType.withName(s)
   )
+
   implicit val loanTypeMapper = MappedColumnType.base[RoleType, String](e => e.toString, s => RoleType.withName(s))
 
   def findOneById(id: String): Option[Login] = sync(db.run(logins.filter(_.id === id).result.headOption))
@@ -290,8 +292,4 @@ trait LoginTable extends HasDatabaseConfig[JdbcProfile] {
     def agentId = column[Option[String]]("agent_id")
   }
 
-}
-
-class Logins(dbConfiguration: DatabaseConfig[JdbcProfile]) extends LoginTable {
-    override protected val dbConfig: DatabaseConfig[JdbcProfile] = dbConfiguration
 }
