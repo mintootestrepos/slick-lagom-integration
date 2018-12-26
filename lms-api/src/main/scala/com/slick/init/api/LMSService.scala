@@ -1,9 +1,8 @@
 package com.slick.init.api
 
-import akka.Done
 import com.lightbend.lagom.scaladsl.api.transport.Method
 import com.lightbend.lagom.scaladsl.api.{Service, ServiceCall}
-import com.slick.init.models.LMSModels.BorrowerProfile
+import com.slick.init.models.LMSModels.{DepositAmount, DepositAmountResponse}
 
 trait LMSService extends Service {
 
@@ -12,10 +11,10 @@ trait LMSService extends Service {
     // @formatter:off
     named("lms-service")
       .withCalls(
-        restCall(Method.POST, "/v1/borrower/stepOne", createBorrowerProfile)
+        restCall(Method.POST, "/v1/loanApplication/depositAmount", depositAmount)
       ).withAutoAcl(true)
     // @formatter:on
   }
 
-  def createBorrowerProfile: ServiceCall[BorrowerProfile, Done]
+  def depositAmount: ServiceCall[DepositAmount, DepositAmountResponse]
 }

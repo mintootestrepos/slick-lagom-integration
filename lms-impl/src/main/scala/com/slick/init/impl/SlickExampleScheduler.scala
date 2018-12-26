@@ -6,7 +6,7 @@ import akka.util.Timeout
 import com.google.gson.Gson
 import com.loanframe.lfdb.models.LoginTable
 import com.slick.init.api.LMSService
-import com.slick.init.models.LMSModels.BorrowerProfile
+import com.slick.init.models.LMSModels.{BorrowerProfile, DepositAmount}
 import javax.inject.Inject
 import play.api.Configuration
 
@@ -17,8 +17,8 @@ case class LMSMessage(msg: String, message: String)
 
 class SlickExampleScheduler @Inject()(lmsService: LMSService, system: ActorSystem, materializer: ActorMaterializer, loginTable: LoginTable, configuration: Configuration)(implicit ec: ExecutionContext) {
 
-  val borrowerProfile = BorrowerProfile("John", "", "Becker", "+919686880498", "john.becker+29c0e4eec5614ef4a85d20320497c06a@gmail.com",
-    "29c0e4eec5614ef4a85d20320497c06a", "29c0e4eec5614ef4a85d20320497c06a")
+  val borrowerProfile = DepositAmount( "ad3b29a5-ccf9-4ab3-976a-3271345ad3c6", "0fa91c33-892f-474f-a2ce-8226724bfa5e", "9876987.0", "12345", "20/00/2018")
+
   val gson = new Gson()
   val concurrency = Runtime.getRuntime.availableProcessors() * 10
 
@@ -30,7 +30,8 @@ class SlickExampleScheduler @Inject()(lmsService: LMSService, system: ActorSyste
 
     println("=============>1")
 
-    val borrower = schedulerImplDao.fetchBorrowerProfile("SomeOtherID1")
+    val borrower = lmsService.depositAmount.invoke(borrowerProfile)
+    borrower.map(println)
     println(s"================> $borrower")
   }
 
