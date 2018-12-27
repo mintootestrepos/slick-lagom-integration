@@ -40,7 +40,7 @@ object LMSModels {
       acceptedMessageProtocols match {
         case Nil => new PlainTextSerializer
         case protocols => protocols.collectFirst {
-          case MessageProtocol(Some("text/plain" | "text/*" | "*/*" | "*"), _, _) => new PlainTextSerializer)
+          case MessageProtocol(Some("text/plain" | "text/*" | "*/*" | "*"), _, _) => new PlainTextSerializer
         }.getOrElse {
           throw NotAcceptable(acceptedMessageProtocols, MessageProtocol(Some("text/plain")))
         }
