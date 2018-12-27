@@ -1,8 +1,9 @@
 package com.slick.init.api
 
+import akka.NotUsed
 import com.lightbend.lagom.scaladsl.api.transport.Method
 import com.lightbend.lagom.scaladsl.api.{Service, ServiceCall}
-import com.slick.init.models.LMSModels.{DepositAmount, DepositAmountResponse}
+import com.slick.init.models.LMSModels.{DepositAmount, DepositAmountResponse, ProcessPayment}
 
 trait LMSService extends Service {
 
@@ -11,10 +12,12 @@ trait LMSService extends Service {
     // @formatter:off
     named("lms-service")
       .withCalls(
-        restCall(Method.POST, "/v1/loanApplication/depositAmount", depositAmount)
+        restCall(Method.POST, "/api/v1/loanApplication/depositAmount", depositAmount),
+        restCall(Method.GET, "/public/earlyPartialRepayment?id&paymentDate", earlyPartialRepayment _)
       ).withAutoAcl(true)
     // @formatter:on
   }
 
   def depositAmount: ServiceCall[DepositAmount, DepositAmountResponse]
+  def earlyPartialRepayment(id: String, paymentDate: String): ServiceCall[NotUsed, String]
 }

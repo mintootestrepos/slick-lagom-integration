@@ -30,7 +30,7 @@ class SlickExampleScheduler @Inject()(lmsService: LMSService, system: ActorSyste
 
     println("=============>1")
 
-    val borrower = lmsService.depositAmount.invoke(borrowerProfile)
+    val borrower = lmsService.earlyPartialRepayment("0fa91c33-892f-474f-a2ce-8226724bfa5e", "27/12/2018").invoke
     borrower.map(println)
     println(s"================> $borrower")
   }
