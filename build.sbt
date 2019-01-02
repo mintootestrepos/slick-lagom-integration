@@ -9,7 +9,7 @@ scalaVersion in ThisBuild := "2.12.8"
 lazy val `lms` = (project in file(".")).aggregate(`lms-api`, `lms-impl`)
 
 //Define the external service’s host and port name.
-lagomUnmanagedServices in ThisBuild := Map("lms-service" -> "http://13.126.58.168/api")
+lagomUnmanagedServices in ThisBuild := Map("lms-service" -> "http://13.126.58.168")
 lagomCassandraEnabled in ThisBuild := false
 lagomKafkaEnabled in ThisBuild := false
 lagomServiceLocatorPort in ThisBuild := 8181
