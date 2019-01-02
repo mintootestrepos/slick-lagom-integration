@@ -8,7 +8,7 @@ import com.lightbend.lagom.scaladsl.devmode.LagomDevModeComponents
 import com.lightbend.lagom.scaladsl.persistence.slick.SlickPersistenceComponents
 import com.lightbend.lagom.scaladsl.playjson.{JsonSerializer, JsonSerializerRegistry}
 import com.lightbend.lagom.scaladsl.server._
-import com.loanframe.lfdb.models.LoginTable
+import com.loanframe.lfdb.models._
 import com.slick.init.api.{LMSService, SlickExampleLMSService}
 import com.softwaremill.macwire._
 import play.api.db.{ConnectionPool, HikariCPConnectionPool}
@@ -45,7 +45,25 @@ abstract class SlickExampleApp(context: LagomApplicationContext) extends LagomAp
     override def serializers: immutable.Seq[JsonSerializer[_]] = Vector.empty
   }
 
-  val loginTable = wire[LoginTable]
+  final val loginTable = wire[LoginTable]
+  final val lmsMessageTracker = wire[LmsMsgTracker]
+  final val lenderTable = wire[LenderTable]
+  final val leadsAcquisitionTable = wire[LeadsAcquisitionTable]
+  final val responsibilityWorkFlowsTable = wire[ResponsibilityWorkFlowsTable]
+  final val caseAssigneeGroupTable = wire[CaseAssigneeGroupTable]
+  final val caseResponsibilityTable = wire[CaseResponsibilityTable]
+
+  final val borrowersTable = wire[BorrowersTable]
+  final val introducerTable = wire[IntroducerTable]
+  final val invoicesTable = wire[InvoicesTable]
+  final val lenderRepayTable = wire[LenderRepayTable]
+  final val anchorLendingTermsTable = wire[AnchorLendingTermsTable]
+  final val loanApplicationTable = wire[LoanApplicationTable]
+  final val loanApplicationAssociationsTable = wire[LoanApplicationAssociationsTable]
+  final val introducerRelationshipManagerTable = wire[IntroducerRelationshipManagerTable]
+  final val channelFinancingAgreementTable = wire[ChannelFinancingAgreementTable]
+  final val borrowerAnchorRelationshipTable = wire[BorrowerAnchorRelationshipTable]
+  final val trancheRecords = wire[TrancheRecords]
 
   wire[SlickExampleScheduler]
 
