@@ -12,17 +12,19 @@ lazy val `lms` = (project in file(".")).aggregate(`lms-api`, `lms-impl`)
 lagomUnmanagedServices in ThisBuild := Map("lms-service" -> "http://13.126.58.168/api")
 lagomCassandraEnabled in ThisBuild := false
 lagomKafkaEnabled in ThisBuild := false
-lagomServiceLocatorPort in ThisBuild := 8181
-lagomServiceGatewayPort in ThisBuild := 9100
+//lagomServiceLocatorPort in ThisBuild := 8181
+//lagomServiceGatewayPort in ThisBuild := 9100
 
 
 lazy val `lms-api` = (project in file("lms-api")).settings(libraryDependencies ++= Seq(lagomScaladslApi))
 
 lazy val `lms-impl` = (project in file("lms-impl"))
   .enablePlugins(LagomScala)
+  .enablePlugins(JavaAppPackaging)
   .settings(
     libraryDependencies ++= Seq(
       lagomScaladslTestKit,
+      lagomJavadslClient,
       lagomScaladslPersistenceJdbc,
       "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided",
       "org.scalatest" %% "scalatest" % "3.0.5" % Test,

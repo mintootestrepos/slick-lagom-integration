@@ -5,4 +5,6 @@ addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "x.y.z")
 
+//addSbtPlugin("com.lightbend.lagom" % "lagom-sbt-plugin" % "X.Y.Z")
+
 //enablePlugins(JavaAppPackaging)

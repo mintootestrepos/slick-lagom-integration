@@ -13,13 +13,13 @@ import com.slick.init.api.{LMSService, SlickExampleLMSService}
 import com.softwaremill.macwire._
 import play.api.db.{ConnectionPool, HikariCPConnectionPool}
 import play.api.libs.ws.ahc.AhcWSComponents
-
+import com.lightbend.lagom.scaladsl.client._
+import com.lightbend.lagom.scaladsl.client.ConfigurationServiceLocatorComponents
 import scala.collection.immutable
 
 class SlickExampleAppLoader extends LagomApplicationLoader {
 
-  override def load(context: LagomApplicationContext): LagomApplication = new SlickExampleApp(context) {
-    override def serviceLocator: ServiceLocator = NoServiceLocator
+  override def load(context: LagomApplicationContext): LagomApplication = new SlickExampleApp(context) with ConfigurationServiceLocatorComponents {
 
   }
 
@@ -27,7 +27,9 @@ class SlickExampleAppLoader extends LagomApplicationLoader {
 
   }
 
-  override def describeService = Some(readDescriptor[SlickExampleLMSServiceImpl])
+  //override def describeService = Some(readDescriptor[SlickExampleLMSService])
+  override def describeService = Some(readDescriptor[SlickExampleLMSService])
+
 }
 
 abstract class SlickExampleApp(context: LagomApplicationContext) extends LagomApplication(context)
